@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from influx_helpers import build_influx_data, write_influx_metrics
 from cdo_helpers import create_session, get, TIME_INTERVALS
+import json
 
 
 def get_ftd_metrics(cdo_endpoint: str, cdo_token: str, fmc_uid: str, interval: str):
@@ -32,6 +33,8 @@ def main():
 
     # Get the API data from the cdFMC
     metric_api_data = get_ftd_metrics(cdo_endpoint, cdo_token, fmc_uid, time_interval)
+    # with open("test.json") as json_data:
+    #     metric_api_data = json.load(json_data)
 
     # Write the data to influxDB (And we will visualize with Grafana)
     for device_data in metric_api_data:

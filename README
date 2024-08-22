@@ -3,5 +3,5 @@
 ## Usage:
 - Copy env.sample to .env
 - Edit .env with your environment specific data
-- run `pip3 install requirements.txt`
+- run `pip3 install -r requirements.txt`
 - run `python3 ftd_metrics.py`
