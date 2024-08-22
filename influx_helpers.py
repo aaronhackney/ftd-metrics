@@ -12,7 +12,7 @@ def build_influx_data(metric_api_data: list) -> list[Point]:
             metric_dict = {
                 "measurement": metric_name,
                 "tags": {"deviceName": metric_api_data["deviceName"], "deviceUid": metric_api_data["deviceUid"]},
-                "fields": convert_percentage(metric_value),
+                "fields": convert_percentage(metric_name, metric_value),
             }
             metrics.append(Point.from_dict(metric_dict))
         elif metric_name == "interfaceHealthMetrics":
@@ -20,10 +20,10 @@ def build_influx_data(metric_api_data: list) -> list[Point]:
     return metrics + if_metrics
 
 
-def convert_percentage(metric_value):
+def convert_percentage(metric_name: str, metric_value):
     percentage_metrics = dict()
     for metric in metric_value:
-        if isinstance(metric_value[metric], float):
+        if isinstance(metric_value[metric], float) and metric_name != "chassisStatsHealthMetrics":
             percentage_metrics[metric] = metric_value[metric] * 100.00
         else:
             percentage_metrics[metric] = metric_value[metric]
